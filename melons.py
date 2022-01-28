@@ -1,4 +1,5 @@
 import random
+import datetime
 
 class AbstractMelonOrder:
     """An abstract base class that other Melon Orders inherit from."""
@@ -10,8 +11,15 @@ class AbstractMelonOrder:
         self.tax = tax
 
     def get_base_price(self):
-        """ Splurge pricing """
+        """ Splurge pricing and eush hour fee"""
+
+        #splurge price
         base_price = random.randrange(5, 10)
+
+        #rush hr fee (M-F 8-11)
+        time = datetime.datetime.now()
+        if time.hour > 8 and time.hour < 11 and time.weekday() < 5:
+            base_price += 4
 
         return base_price
 
