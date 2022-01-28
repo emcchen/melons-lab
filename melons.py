@@ -1,17 +1,29 @@
 import random
 import datetime
 
+class TooManyMelonsError(ValueError):
+    """ Error if ordering too many melons """
+    def __init__(self):
+        super().__init__("No more than 100 melons!")
+
+
 class AbstractMelonOrder:
     """An abstract base class that other Melon Orders inherit from."""
     def __init__(self, species, qty, order_type, tax):
+
+        if self.qty > 100:
+            raise TooManyMelonsError
+
         self.species = species
         self.qty = qty
         self.order_type = order_type
         self.shipped = False
         self.tax = tax
 
+    
+
     def get_base_price(self):
-        """ Splurge pricing and eush hour fee"""
+        """ Splurge pricing and rush hour fee"""
 
         #splurge price
         base_price = random.randrange(5, 10)
